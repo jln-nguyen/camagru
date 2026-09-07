@@ -17,18 +17,85 @@ class AuthController
         $errors = $this->validationRegistration($username, $email, $password);
 
         if (empty($errors)) {
-            User::createUser($username, $email, $password);
-            echo "User has been created successfully.";
+            $token = User::createUser($username, $email, $password);
+            if ($token !== false) {
+                $subject = "Confirm your registration";
+                $message = "Please click the following link to confirm your registration: ";
+                $message .= "http://localhost:80/confirm?token=" . urlencode($token);
+                $headers = "From: no-reply@camagru.local";
+                mail($email, $subject, $message, $headers);
+                require __DIR__ . '/../Views/auth/register_success.php';
+            }
+            else {
+                $errors[] = "An error occurred while creating the user. Please try again.";
+                require __DIR__ . '/../Views/auth/register.php';
+                return;
+            }
         } else {
             require __DIR__ . '/../Views/auth/register.php';
         }
+    }
+
+    public function confirmRegistration(): void
+    {
+        if (!isset($_GET['token'])) {
+        require __DIR__ . '/../Views/auth/confirmation_failure.php';
+        return;
+        }
+
+        $token = $_GET['token'];
+
+        if (User::tokenValid($token)) {
+            require __DIR__ . '/../Views/auth/reset_password.php';
+        } else {
+            require __DIR__ . '/../Views/auth/token_expired_error.php';
+        }
+    }
+
+    public function showLoginForm(): void
+    {
+        $errors = [];
+        require __DIR__ . '/../Views/auth/login.php';
+    }
+
+    public function login(): void
+    {
+        $errors = [];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $user = User::getUserByUsername($username);
+
+        if ($user && password_verify($password, $user['password'])) {
+            if (!$user['is_confirmed']) {
+                $errors[] = "Please confirm your email before logging in.";
+                require __DIR__ . '/../Views/auth/login.php';
+                return;
+            }
+            $_SESSION['user_id'] = $user['id'];
+            header('Location: /');
+            return;
+        } else {
+            $errors[] = "Invalid username or password.";
+            require __DIR__ . '/../Views/auth/login.php';
+        }
+    }
+
+    public function logout(): void
+    {
+        session_destroy();
+        header('Location: /');
     }
 
     private function validationRegistration($username, $email, $password): array
     {
         $errors = [];
 
-        if (strlen($username) < 5 || strlen($username) > 50){
+        if (strlen($username) === 0 || strlen($email) === 0 || strlen($password) === 0) {
+            $errors[] = "All fields are required.";
+        }
+
+        elseif (strlen($username) < 5 || strlen($username) > 50){
             $errors[] = "Invalid Username. The username must contain between 5 and 50 characters";
         } elseif (!preg_match('/^[a-zA-Z0-9_-]+$/', $username)){
             $errors[] = "Invalid Username. Allowed: Letters, numbers, - and _.";
@@ -36,26 +103,26 @@ class AuthController
                 $errors[] = "Username already exists.";
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = "Invalid Email, must be in format exemple@exemple.ex";
         } elseif (User::emailExists($email)){
             $errors[] = "An account already exists with this email, please sign Up.";
         }
 
-        if (strlen($password) < 8 || strlen($password) > 255){
+        elseif (strlen($password) < 8 || strlen($password) > 255){
             $errors[] = "Invalid Password. The password must contain between 8 and 255 characters";
         }
 
-        if (!preg_match('/[0-9]/', $password)) {
+        elseif (!preg_match('/[0-9]/', $password)) {
             $errors[] = "Password must contain at least one numeric digit.";
         }
-        if (!preg_match('/[a-z]/', $password)) {
+        elseif (!preg_match('/[a-z]/', $password)) {
             $errors[] = "Password must contain at least one lowercase letter.";
         }
-        if (!preg_match('/[A-Z]/', $password)) {
+        elseif (!preg_match('/[A-Z]/', $password)) {
             $errors[] = "Password must contain at least one uppercase letter.";
         }
-        if (!preg_match('/[`~!@#$%^&*()\-_=+{}[\]:;"\'<>,.?\/|\\\\]/', $password)) {
+        elseif (!preg_match('/[`~!@#$%^&*()\-_=+{}[\]:;"\'<>,.?\/|\\\\]/', $password)) {
             $errors[] = "Password must contain at least one special character.";
         }
 
