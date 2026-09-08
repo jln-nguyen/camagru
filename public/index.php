@@ -7,7 +7,10 @@ Autoloader::register();
 
 $router = new Router();
 
-$router->addRoute('GET', '/', [HomeController::class, 'index']);
+$router->addRoute('GET', '/', [GalleryController::class, 'index']);
+$router->addRoute('GET', '/gallery/{id}', [GalleryController::class, 'show']);
+$router->addRoute('POST', '/like/{id}', [GalleryController::class, 'like']);
+$router->addRoute('POST', '/comment/{id}', [GalleryController::class, 'comment']);
 
 $router->addRoute('GET', '/register', [AuthController::class, 'showRegisterForm']);
 $router->addRoute('POST', '/register', [AuthController::class, 'register']);
@@ -24,5 +27,9 @@ $router->addRoute('GET', '/confirm-reset-password', [ProfileController::class, '
 $router->addRoute('GET', '/profile', [ProfileController::class, 'showProfile']);
 $router->addRoute('GET', '/modify', [ProfileController::class, 'showModifyProfileForm']);
 $router->addRoute('POST', '/modify', [ProfileController::class, 'modifyProfile']);
+
+$router->addRoute('GET', '/edit-images', [EditController::class, 'showEditImagesPage']);
+$router->addRoute('POST', '/delete-image/{id}', [EditController::class, 'deleteImage']);
+
 $router->dispatch();
 ?>

@@ -1,6 +1,6 @@
         </main>
         <footer class="site-footer">
-            <p>Made by junguyen</p>
+            <a href="https://github.com/jln-nguyen">Made by junguyen.</a>
         </footer>
     </body>
 </html>

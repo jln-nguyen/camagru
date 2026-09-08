@@ -45,10 +45,10 @@ class AuthController
 
         $token = $_GET['token'];
 
-        if (User::tokenValid($token)) {
-            require __DIR__ . '/../Views/auth/reset_password.php';
+        if (User::confirmUser($token)) {
+            require __DIR__ . '/../Views/auth/confirmation_success.php';
         } else {
-            require __DIR__ . '/../Views/auth/token_expired_error.php';
+            require __DIR__ . '/../Views/auth/confirmation_failure.php';
         }
     }
 
