@@ -22,13 +22,13 @@ class GalleryController
         $commentsCount = [];
 
         foreach ($images as $image) {
-            $likesCount[$image['id']] = Like::countLikes($image['id']);
-            $commentsCount[$image['id']] = Comment::countComments($image['id']);
+            $likesCount[$image['image_id']] = Like::countLikes($image['image_id']);
+            $commentsCount[$image['image_id']] = Comment::countComments($image['image_id']);
 
             if (isset($_SESSION['user_id'])) {
-                $userLiked[$image['id']] = Like::hasLiked($_SESSION['user_id'], $image['id']);
+                $userLiked[$image['image_id']] = Like::hasLiked($_SESSION['user_id'], $image['image_id']);
             } else {
-                $userLiked[$image['id']] = false;
+                $userLiked[$image['image_id']] = false;
             }
         }
 
@@ -96,7 +96,7 @@ class GalleryController
             if ($info_author && $info_author['notify_on_comment'] && $info_author['user_id'] != $userId) {
                 $authorEmail = $info_author['email'];
                 $subject = "New Comment on Your Image";
-                $message = "Hello " . $info_author['username'] . ",\n\nYou have a new comment on your image:\n\n" . $commentText . "\n\nYou can desubscribe from notifications in your profile settings.";
+                $message = "Hello " . $info_author['username'] . ",\n\nYou have a new comment on your image:\n\n" . $commentText . "\n\nYou can unsubscribe from notifications in your profile settings.";
                 $headers = "From: no-reply@camagru.com";
                 mail($authorEmail, $subject, $message, $headers);
             }

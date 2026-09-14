@@ -13,8 +13,9 @@ class AuthController
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
 
-        $errors = $this->validationRegistration($username, $email, $password);
+        $errors = $this->validationRegistration($username, $email, $password, $confirm_password);
 
         if (empty($errors)) {
             $token = User::createUser($username, $email, $password);
@@ -87,7 +88,7 @@ class AuthController
         header('Location: /');
     }
 
-    private function validationRegistration($username, $email, $password): array
+    private function validationRegistration($username, $email, $password, $confirm_password): array
     {
         $errors = [];
 
@@ -111,6 +112,10 @@ class AuthController
 
         elseif (strlen($password) < 8 || strlen($password) > 255){
             $errors[] = "Invalid Password. The password must contain between 8 and 255 characters";
+        }
+
+        elseif ($password !== $confirm_password) {
+            $errors[] = "Passwords do not match.";
         }
 
         elseif (!preg_match('/[0-9]/', $password)) {

@@ -3,7 +3,7 @@
     <h1>Image Details</h1>
     <img src="<?= htmlspecialchars($image['file_path']) ?>" alt="Image" height="400" width="700">
     <div class="actions">
-        <form method="POST" action="/like/<?= $image['id'] ?>" class="like-form">
+        <form method="POST" action="/like/<?= $image['image_id'] ?>" class="like-form">
             <button type="submit" class="like-btn">
                 <?= $userLiked ? '♥' : '♡' ?>
                 <?= $likesCount ?>
@@ -15,8 +15,8 @@
         <p>Posted by: <?= htmlspecialchars($image['username']) ?> - <?= htmlspecialchars($image['created_at']) ?></p>
     </div>
     <h2>Comments</h2>
-        <form method="POST" action="/comment/<?= $image['id'] ?>" class="comment-form">
-            <input type="hidden" name="image_id" value="<?= $image['id'] ?>">
+        <form method="POST" action="/comment/<?= $image['image_id'] ?>" class="comment-form">
+            <input type="hidden" name="image_id" value="<?= $image['image_id'] ?>">
             <textarea name="comment" required></textarea>
             <button type="submit">Add Comment</button>
         </form>

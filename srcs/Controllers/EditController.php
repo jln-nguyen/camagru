@@ -27,7 +27,7 @@ class EditController
 
         $image = Image::getImageById($imageId);
 
-        if (!$image || $image['user_id'] !== $userId) {
+        if (!$image || (int)$image['user_id'] !== $userId) {
             header('Location: /edit-images');
             exit;
         }

@@ -232,6 +232,15 @@ form label {
     grid-column-start: 5;
 }
 
+.overlay-thumb {
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
+.overlay-thumb.selected {
+    border-color: #222;
+}
+
 .site-footer a {
     color: #222;
     text-decoration: none;

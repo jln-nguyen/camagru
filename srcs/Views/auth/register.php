@@ -14,7 +14,8 @@
         <label>Username: <input type="text" name="username"></label>
         <label>Email: <input type="email" name="email"></label>
         <label>Password: <input type="password" name="password"></label>
-        <button type="submit">Sign In</button>
+        <label>Confirm Password: <input type="password" name="confirm_password"></label>
+        <button type="submit">Sign Up</button>
     </form>
     <p><a href="/login">Already have an account? Login here.</a></p>
 </div>
