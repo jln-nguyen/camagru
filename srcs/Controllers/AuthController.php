@@ -22,7 +22,7 @@ class AuthController
             if ($token !== false) {
                 $subject = "Confirm your registration";
                 $message = "Please click the following link to confirm your registration: ";
-                $message .= "http://localhost:80/confirm?token=" . urlencode($token);
+                $message .= "http://localhost:8080/confirm?token=" . urlencode($token);
                 $headers = "From: no-reply@camagru.local";
                 mail($email, $subject, $message, $headers);
                 require __DIR__ . '/../Views/auth/register_success.php';

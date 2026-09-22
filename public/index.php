@@ -30,6 +30,7 @@ $router->addRoute('POST', '/modify', [ProfileController::class, 'modifyProfile']
 
 $router->addRoute('GET', '/edit-images', [EditController::class, 'showEditImagesPage']);
 $router->addRoute('POST', '/delete-image/{id}', [EditController::class, 'deleteImage']);
+$router->addRoute('POST', '/edit-images/create', [EditController::class, 'newPost']);
 
 $router->dispatch();
 ?>

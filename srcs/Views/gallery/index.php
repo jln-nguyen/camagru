@@ -1,30 +1,33 @@
 <?php require __DIR__ . '/../header.php'; ?>
 
 <div class="container">
-    <!-- <h1>All Creations</h1> -->
     <div class="gallery-item">
         <?php if (empty($images)): ?>
             <h2>No posts have been made yet. Be the first to post!</h2>
             <a href="/edit-images">Create a new post</a>               
         <?php else: ?>
             <a href="/edit-images">Create a new post</a><br><br>
-            <a href="/gallery/<?= $image['image_id'] ?>">
-                <img src="<?= htmlspecialchars($image['file_path']) ?>" alt="Image" height="200" width="350">
-            </a>
+            <?php foreach ($images as $image) : ?>
+                <div class="posts">
+                    <a href="/gallery/<?= $image['image_id'] ?>">
+                        <img src="<?= htmlspecialchars($image['file_path']) ?>" alt="Image" height="200" width="320">
+                    </a>
 
-            <div class="actions">
-                <form method="POST" action="/like/<?= $image['image_id'] ?>" class="like-form">
-                    <button type="submit" class="like-btn">
-                        <?= $userLiked[$image['image_id']] ? '♥' : '♡' ?>
-                        <?= $likesCount[$image['image_id']] ?>
-                    </button>
-                </form>
+                    <div class="actions">
+                        <form method="POST" action="/like/<?= $image['image_id'] ?>" class="like-form">
+                            <button type="submit" class="like-btn">
+                                <?= $userLiked[$image['image_id']] ? '♥' : '♡' ?>
+                                <?= $likesCount[$image['image_id']] ?>
+                            </button>
+                        </form>
 
-                <a href="/gallery/<?= $image['image_id'] ?>" class="comment-link">
-                    💬 <?= $commentsCount[$image['image_id']] ?>
-                </a>
-                <p>Posted by: <?= htmlspecialchars($image['username'])?></p>
-            </div>
+                        <a href="/gallery/<?= $image['image_id'] ?>" class="comment-link">
+                            💬 <?= $commentsCount[$image['image_id']] ?>
+                        </a>
+                        <p>Posted by: <?= htmlspecialchars($image['username'])?></p>
+                    </div>
+                </div>
+                <?php endforeach; ?>
         <?php endif; ?>
     </div>
 

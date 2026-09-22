@@ -40,6 +40,17 @@ class Image {
         return (int) $row['total'];
     }
 
+    public static function deleteImage(int $imageId): bool
+    {
+        $im = Image::getImageById($imageId);
+        $file_path = __DIR__ . "/../../public/" . $im["file_path"];
+        unlink($file_path);
+        $pdo = Database::getInstance()->getConnection();
+        $sqlQuery = 'DELETE FROM images WHERE id = :imageId';
+        $deleteImage = $pdo->prepare($sqlQuery);
+        return $deleteImage->execute(['imageId' => $imageId]);
+    }
+
     public static function getImageById(int $imageId): ?array
     {
         $pdo = Database::getInstance()->getConnection();
@@ -60,14 +71,6 @@ class Image {
         $getImages = $pdo->prepare($sqlQuery);
         $getImages->execute(['userId' => $userId]);
         return $getImages->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public static function deleteImage(int $imageId): bool
-    {
-        $pdo = Database::getInstance()->getConnection();
-        $sqlQuery = 'DELETE FROM images WHERE id = :imageId';
-        $deleteImage = $pdo->prepare($sqlQuery);
-        return $deleteImage->execute(['imageId' => $imageId]);
     }
 }
 ?>

@@ -88,7 +88,7 @@ class ProfileController
             User::setPasswordResetToken($user['email'], $token, date('Y-m-d H:i:s', strtotime('+15 minutes')));
             $subject = "Reset your password";
             $message = "Please click the following link to reset your password: ";
-            $message .= "http://localhost:80/reset-password?token=" . urlencode($token);
+            $message .= "http://localhost:8080/reset-password?token=" . urlencode($token);
             $message .= "\nThis link will expire in 15 minutes.";
             $headers = "From: no-reply@camagru.local";
             mail($email, $subject, $message, $headers);

@@ -38,7 +38,6 @@ class GalleryController
     public function show(string $imageId): void
     {
         $imageId = (int)$imageId;
-        echo $imageId;
         $image = Image::getImageById($imageId);
         if (!$image) {
             header('Location: /');
@@ -87,6 +86,7 @@ class GalleryController
         }
 
         $userId = $_SESSION['user_id'];
+        $user = User::getUserById($userId);
         $imageId = (int)$imageId;
         $commentText = trim($_POST['comment']);
 
@@ -96,7 +96,7 @@ class GalleryController
             if ($info_author && $info_author['notify_on_comment'] && $info_author['user_id'] != $userId) {
                 $authorEmail = $info_author['email'];
                 $subject = "New Comment on Your Image";
-                $message = "Hello " . $info_author['username'] . ",\n\nYou have a new comment on your image:\n\n" . $commentText . "\n\nYou can unsubscribe from notifications in your profile settings.";
+                $message = "Hello " . $info_author['username'] . ",\n\nYou have a new comment on your image" . " from " . $user['username'] . ":\n\n" . $commentText . "\n\nYou can unsubscribe from notifications in your profile settings.";
                 $headers = "From: no-reply@camagru.com";
                 mail($authorEmail, $subject, $message, $headers);
             }

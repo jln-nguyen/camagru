@@ -7,11 +7,17 @@ RUN apt-get update && apt-get install -y msmtp \
     libjpeg-dev
 
 COPY ./conf/msmtprc /etc/msmtprc
+COPY ./conf/script.sh /usr/local/bin/script.sh
 
-RUN chown www-data:www-data /etc/msmtprc && chmod 600 /etc/msmtprc
+RUN chmod +x /usr/local/bin/script.sh && \
+    chown www-data:www-data /etc/msmtprc && chmod 600 /etc/msmtprc
 
 RUN echo "sendmail_path = /usr/bin/msmtp -t" > /usr/local/etc/php/conf.d/msmtp.ini
 
 RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-configure gd --with-jpeg && \
     docker-php-ext-install gd
+
+ENTRYPOINT ["/usr/local/bin/script.sh"]
+
+CMD ["php-fpm"]
