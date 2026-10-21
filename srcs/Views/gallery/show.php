@@ -1,5 +1,5 @@
 <?php require __DIR__ . '/../header.php'; ?>
-<div class="container">
+<div class="gallery-item">
     <div class="post-details">
         <h2>Post by <?= htmlspecialchars($image['username']) ?></h2>
         <p><?= htmlspecialchars($image['created_at']) ?></p>
@@ -28,6 +28,6 @@
                 <button type="submit">Add Comment</button>
             </form>
     </div>
-    <a href="/">Back to Gallery</a>
+    <a href="/">⬅ Back to Gallery</a>
 </div>
 <?php require __DIR__ . '/../footer.php'; ?>

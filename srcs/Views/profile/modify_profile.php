@@ -19,6 +19,6 @@
         </div>
         <button type="submit">Update Profile</button>
     </form>
-    <p><a href="/profile">Back to Profile</a></p>
+    <p><a href="/profile">⬅ Back to Profile</a></p>
 </div>
 <?php require __DIR__ . '/../footer.php'; ?>

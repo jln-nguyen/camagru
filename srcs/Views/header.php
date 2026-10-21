@@ -13,7 +13,7 @@
     <body>
         <header class="site-header">
             <div class="header-inner">
-                <a class="home-link" href="/">Camagru</a>
+                <a class="home-link" href="/"><img src="/media/logo_camagru.png" alt="Logo"></a>
                     <div class="user-menu">
                         <button class="user-button" type="button" aria-label="Open user menu" aria-expanded="false">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

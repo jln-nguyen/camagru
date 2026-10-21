@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/../header.php'; ?>
 <div class="edit-page">
     <div class="edit-main">
-        <h1>New Post</h1>
+        <h3>New Post</h3>
         <div class="webcam-container" style="position: relative; width: 400px; height: 300px;">
             <video id="webcam" autoplay playsinline width="320" height="240"></video>
             <img id="overlay-preview" style="position: absolute; top: 0; left: 0; width: 400px; height: 300px; display: none;">
@@ -20,9 +20,9 @@
         <button id="take-photo" style="display: none"> 📷 </button>
         <button id="capture-btn" disabled>Capture</button>
     </div>
-    </div>
+    <!-- </div> -->
     <div class="edit-side">
-        <h1>Your Posts</h1>
+        <h3>Your Posts</h3>
         <?php if (empty($images)): ?>
             <p>You haven't posted yet</p>
         <?php else: ?>
@@ -31,7 +31,7 @@
                     <div class="image-item">
                         <img src="<?= htmlspecialchars($image['file_path']) ?>" alt="Image" height="100" width="160">
                         <form method="POST" action="/delete-image/<?= $image['id'] ?>" class="delete-form">
-                            <button type="submit" class="delete-btn">Delete</button>
+                            <button type="submit" class="delete-btn">✖️</button>
                         </form>
                     </div>
                 <?php endforeach; ?>
