@@ -4,7 +4,7 @@ class GalleryController
 {
     public function index(): void
     {
-        $perPage = 5;
+        $perPage = 6;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
         $totalImages = Image::countImages();

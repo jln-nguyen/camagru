@@ -11,27 +11,25 @@
         <script src="/js/script.js" defer></script>
     </head>
     <body>
+        <?php $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
         <header class="site-header">
-            <div class="header-inner">
-                <a class="home-link" href="/"><img src="/media/logo_camagru.png" alt="Logo"></a>
-                    <div class="user-menu">
-                        <button class="user-button" type="button" aria-label="Open user menu" aria-expanded="false">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.4c-3.3 0-9.8 1.7-9.8 5v1.4h19.6V19.4c0-3.3-6.5-5-9.8-5z"/>
-                            </svg>
-                        </button>
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                            <nav class="dropdown-menu" aria-hidden="true">
-                                <a href="/profile">Profile</a>
-                                <a href="/logout">Logout</a>
-                            </nav>
-                        <? else : ?>
-                            <nav class="dropdown-menu" aria-hidden="true">
-                                <a href="/login">Login</a>
-                                <a href="/register">Register</a>
-                            </nav>
-                        <?php endif; ?>
-                    </div>
+            <a class="logo" href="/">Camagru.</a>
+
+            <nav class="nav" aria-label="Main">
+                <a href="/" class="<?= $path === '/' ? 'active' : '' ?>">Gallery</a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="/edit-images" class="<?= $path === '/edit-images' ? 'active' : '' ?>">Studio</a>
+                <?php endif; ?>
+            </nav>
+
+            <div class="header-actions">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="/profile">Profile</a>
+                    <a href="/logout" class="btn-outline">Log out</a>
+                <?php else: ?>
+                    <a href="/login">Log in</a>
+                    <a href="/register" class="btn-outline">Sign up</a>
+                <?php endif; ?>
             </div>
         </header>
         <main>
