@@ -1,43 +1,51 @@
 <?php require __DIR__ . '/../header.php'; ?>
-<div class="edit-page">
-    <div class="edit-main">
-        <h3>New Post</h3>
-        <div class="webcam-container" style="position: relative; width: 400px; height: 300px;">
-            <video id="webcam" autoplay playsinline width="320" height="240"></video>
-            <img id="overlay-preview" style="position: absolute; top: 0; left: 0; width: 400px; height: 300px; display: none;">
-            <img id="uploaded-preview" width="320" height="240" style="display: none;">
-        </div>
-        <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
 
-        <div class="overlays">
-            <h3>Choose an overlay</h3>
-            <img src="/overlays/glasses.png" class="overlay-thumb" data-overlay="/overlays/glasses.png" alt="glasses" width="100">
-            <img src="/overlays/hearts.png" class="overlay-thumb" data-overlay="/overlays/hearts.png" alt="hearts" width="100">
-            <img id="preview" alt="Preview-edit" style="display: none;">
+<div class="edit-page">
+    <section class="edit-main">
+        <h1>New post</h1>
+
+        <div class="stage" id="stage">
+            <video id="webcam" autoplay playsinline></video>
+            <img id="uploaded-preview" alt="Uploaded photo" style="display:none">
+            <!-- les overlays sélectionnés sont ajoutés ici par le JS -->
         </div>
-        <label id="upload-btn" for="upload-file" class="custom-file-upload"> 📂 </label>
-        <input type="file" id="upload-file" name="background" accept = "image/png, image/jpeg" />
-        <button id="take-photo" style="display: none"> 📷 </button>
-        <button id="capture-btn" disabled>Capture</button>
-    </div>
-    <!-- </div> -->
-    <div class="edit-side">
-        <h3>Your Posts</h3>
+        <canvas id="canvas" width="640" height="480" hidden></canvas>
+
+        <div class="overlays" role="group" aria-label="Overlays">
+            <?php foreach ($overlays as $overlay): ?>
+                <img src="<?= htmlspecialchars($overlay) ?>" class="overlay-thumb"
+                     data-overlay="<?= htmlspecialchars($overlay) ?>" alt="Overlay">
+            <?php endforeach; ?>
+        </div>
+
+        <div class="controls">
+            <button id="capture-btn" type="button" class="btn-primary" disabled>Capture</button>
+
+            <label for="file-upload" class="btn-outline" id="upload-btn">Upload a photo</label>
+            <input type="file" id="file-upload" accept="image/png, image/jpeg">
+
+            <button id="take-photo" type="button" class="btn-outline" style="display:none">Use camera</button>
+        </div>
+    </section>
+
+    <aside class="edit-side">
+        <h2>Your posts</h2>
         <?php if (empty($images)): ?>
-            <p>You haven't posted yet</p>
+            <p class="muted">Nothing yet.</p>
         <?php else: ?>
             <div class="images-list">
                 <?php foreach ($images as $image): ?>
                     <div class="image-item">
-                        <img src="<?= htmlspecialchars($image['file_path']) ?>" alt="Image" height="100" width="160">
-                        <form method="POST" action="/delete-image/<?= $image['id'] ?>" class="delete-form">
-                            <button type="submit" class="delete-btn">✖️</button>
+                        <img src="<?= htmlspecialchars($image['file_path']) ?>" alt="Your post" loading="lazy">
+                        <form method="POST" action="/delete-image/<?= (int)$image['id'] ?>">
+                            <button type="submit" class="link-btn">Delete</button>
                         </form>
                     </div>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-    </div>
+    </aside>
 </div>
+
 <script src="/js/edit.js"></script>
 <?php require __DIR__ . '/../footer.php'; ?>

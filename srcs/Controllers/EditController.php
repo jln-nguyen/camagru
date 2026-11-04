@@ -11,6 +11,8 @@ class EditController
  
         $userId = $_SESSION['user_id'];
         $images = Image::getImagesByUserId($userId);
+        $overlays = glob(__DIR__ . "/../../public/overlays/*");
+        $overlays = str_replace(__DIR__ . "/../../public/overlays/", "/overlays/", $overlays);
 
         require __DIR__ . '/../Views/edit/edit_images.php';
     }
@@ -79,5 +81,15 @@ class EditController
             return ;
         }
         Image::createImage($userId, $filename);
+    }
+
+    private function importOverlays(): array
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit;
+        }
+        $overlays = glob(__DIR__ . "/../../public/overlays/*");
+        return $overlays;
     }
 }

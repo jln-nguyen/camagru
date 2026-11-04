@@ -28,7 +28,7 @@
                 <button type="submit" class="btn-outline">Post</button>
             </form>
         <?php else: ?>
-            <p class="muted"><a href="/login">Log in</a> to like or comment.</p>
+            <p class="muted"><a class="muted-link" href="/login">Log in</a> to like or comment.</p>
         <?php endif; ?>
 
         <?php foreach ($comments as $comment): ?>

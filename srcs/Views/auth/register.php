@@ -1,11 +1,11 @@
 <?php require __DIR__ . '/../header.php'; ?>
 
 <div class="auth-form">
-<h1>Sign Up</h1>
+<a class="form-title">Sign Up</a>
     <?php if (!empty($errors)): ?>
         <ul>
             <?php foreach ($errors as $error): ?>
-                <li><?= htmlspecialchars($error) ?></li>
+                <li class="error-auth"><?= htmlspecialchars($error) ?></li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
@@ -19,6 +19,6 @@
         <p class="form-note">** Must contain at least 8 characters with at least 1 digit, 1 uppercase letter, 1 lowercase letter and 1 special character.</p>
         <button type="submit">Sign Up</button>
     </form>
-    <p><a href="/login">Already have an account? Login here.</a></p>
+    <p><a class="link" href="/login">Already have an account? Login here.</a></p>
 </div>
 <?php require __DIR__ . '/../footer.php'; ?>

@@ -2,5 +2,6 @@
 <div class="container">
 	<h1>Registration failed</h1>
 	<p>There was an error confirming your registration. Please try again.</p>
+	<a class="back-link" href="/login">← Back to Login</a>
 </div>
 <?php require __DIR__ . '/../footer.php'; ?>
