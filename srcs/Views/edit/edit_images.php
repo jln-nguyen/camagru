@@ -2,7 +2,7 @@
 
 <div class="edit-page">
     <section class="edit-main">
-        <h1>New post</h1>
+        <a class="form-title">New post</a>
 
         <div class="stage" id="stage">
             <video id="webcam" autoplay playsinline></video>
@@ -29,7 +29,7 @@
     </section>
 
     <aside class="edit-side">
-        <h2>Your posts</h2>
+        <a class="form-title">Your posts</a>
         <?php if (empty($images)): ?>
             <p class="muted">Nothing yet.</p>
         <?php else: ?>

@@ -55,9 +55,12 @@ class ProfileController
         }
 
         if (isset($_POST['notify_on_comment'])) {
-            $notifications_enabled = 1;
-        } else {
-            $notifications_enabled = 0;
+            if ($_POST['notify_on_comment'] == 1) {
+                $notifications_enabled = 1;
+            }
+            else {
+                $notifications_enabled = 0;
+            }
         }
 
         $errors = $this->validationModifyProfile($username, $email, $password);
