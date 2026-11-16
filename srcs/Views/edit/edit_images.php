@@ -7,7 +7,6 @@
         <div class="stage" id="stage">
             <video id="webcam" autoplay playsinline></video>
             <img id="uploaded-preview" alt="Uploaded photo" style="display:none">
-            <!-- les overlays sélectionnés sont ajoutés ici par le JS -->
         </div>
         <canvas id="canvas" width="640" height="480" hidden></canvas>
 

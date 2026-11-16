@@ -57,6 +57,11 @@ class EditController
             return ;
         }
 
+        if (strlen($photo) > 3145728) {
+            http_response_code(413);
+            exit("Too Large.");
+        }
+
         $data = str_replace('data:image/png;base64,', '', $photo);
         $data = base64_decode($data);
 
@@ -81,15 +86,5 @@ class EditController
             return ;
         }
         Image::createImage($userId, $filename);
-    }
-
-    private function importOverlays(): array
-    {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
-            exit;
-        }
-        $overlays = glob(__DIR__ . "/../../public/overlays/*");
-        return $overlays;
     }
 }
